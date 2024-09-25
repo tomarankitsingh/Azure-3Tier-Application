@@ -38,51 +38,57 @@ Let’s begin constructing this architecture!
 
 
 
-1. Navigate to the Azure portal.
-2. In the search bar, search for "Resource Groups" and click `Create`.
-3. Set the **Resource Group Name** to `ThreeTierResourceGroup`.
-4. Set the **Region** to `East US` (or your preferred region).
-5. Click `Review + Create`, then `Create`.
+
+1. Open the Azure portal.
+2. Use the search bar to find "Resource Groups" and click on `Create`.
+3. Enter `ThreeTier-RG` as the **Resource Group Name**.
+4. Choose West US 2 (or your preferred region) for the `Region`.
+5. Click `Review + Create`, then select `Create`.
 
 ---
 
 ## Step 2: Creating a Virtual Network with 3 Subnets
-![Screenshot 2024-08-16 031519](https://github.com/user-attachments/assets/4df1a882-9862-44f2-a6e0-09710f18eb2a)
+![image](https://github.com/user-attachments/assets/96a2dfe2-39af-49d4-870c-d814742f9805)
 
-1. In the search bar, search for `Virtual Networks` and click `Create`.
-2. Set the **Name** to `ThreeTierVNet`.
-3. Set the **Region** to `East US`.
-4. Set the **Address Space** to `10.0.0.0/16`.
-5. Click `Next: IP Addresses`.
+
+1. In the search bar, look for `Virtual Networks` and click on `Create`.
+2. Enter **ThreeTierVNet** as the `Name`.
+3. Select **West US 2** for the `Region`.
+4. Set the `Address Space` to **10.0.0.0/24**.
+5. Click on `Next: IP Addresses`.
 
 6. Add 3 Subnets:
-   - **WebSubnet**: Address range `10.0.1.0/24`
-   - **AppSubnet**: Address range `10.0.2.0/24`
-   - **DbSubnet**: Address range `10.0.3.0/24`
+   - **Web-Subnet**: Address range `10.0.0.0/27`
+   - **App-Subnet**: Address range `10.0.0.32/27`
+   - **Db-Subnet**: Address range `10.0.0.64/27`
 7. Click `Review + Create`, then `Create`.
 
 ---
 
-## Step 3: Create NSGs and Associate with Subnets
-![Screenshot 2024-08-16 031847](https://github.com/user-attachments/assets/46438f24-0582-4ff2-b858-dae3c8d272a2)
+## Step 3: Create NSGs and Associate them with Subnets
+![image](https://github.com/user-attachments/assets/c80d62db-c491-4739-beaa-5427ef048bdb)
+
 
 ### Create NSGs for Web, App, and DB Subnets
 
-1. In the search bar, search for `Network Security Groups` and click `Create`.
+1. In the search bar, look for **Network Security Groups** and click on `Create`.
 2. Create an NSG for each tier:
-   - **WebNSG** for Web Tier
-   - **AppNSG** for App Tier
-   - **DbNSG** for DB Tier
-3. Set the **Region** to `East US` for each NSG.
-4. Click `Review + Create`, then `Create`.
+   - **WebNSG** for the Web Tier
+   - **AppNSG** for the App Tier
+   - **DbNSG** for the DB Tier
+3. For each NSG, set the **Region** to `West US 2`.
+4. Click on `Review + Create`, and then select `Create`.
 
 ### Create Rules for NSGs
 
-1. **WebNSG**:![Screenshot 2024-08-16 031947](https://github.com/user-attachments/assets/3112689d-5a1e-4291-9a57-45e4208cf5bf)
+1. **WebNSG**: ![image](https://github.com/user-attachments/assets/51d478a8-a058-4641-b639-011a3008e395)
+
 
    - Add inbound security rules to allow HTTP (port 80) and HTTPS (port 443) traffic from any source.
+   - Add outbound security rules to allow from any source to Appsubnet as the destination (add the IP of Appsubnet). 
 
-2. **AppNSG**:![Screenshot 2024-08-16 032011](https://github.com/user-attachments/assets/1f6de6a2-277b-429e-8dac-8a1d596d5de5)
+2. **AppNSG**: ![image](https://github.com/user-attachments/assets/6fbbcfb4-654e-42ec-bfc6-34de95b80418)
+
 
    - Add inbound security rules to allow traffic from `WebSubnet` to `AppSubnet` on port 8080.
 
