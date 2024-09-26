@@ -178,46 +178,34 @@ Let’s begin constructing this architecture!
    - Proceed through the wizard, and in the `Roles` section, select `Web Server (IIS)`.
    - Finish the wizard and wait for the IIS role to install.
 
-2. **Navigate to the wwwroot Directory**![Screenshot 2024-08-16 033523](https://github.com/user-attachments/assets/a065d8f2-7e32-404a-bc64-d6e8377bfbf8)
+2. **Navigate to the wwwroot Directory and Upload your HTML File**                                                                                                 
+    ![Screenshot (3)](https://github.com/user-attachments/assets/3d95b0c4-698b-4475-8854-dcbe1e4c67a6)
 
-   - Once IIS is installed, go to the following path on your VM:  
-     `C:\inetpub\wwwroot`.
-   
-3. **Upload Your HTML File**![Screenshot 2024-08-16 033545](https://github.com/user-attachments/assets/8b380837-54de-46ec-8bc8-443e10169488)
 
+   - Once IIS is installed, go to the following path on your VM:
+      `C:\inetpub\wwwroot`.
    - In the `wwwroot` folder, delete the default `index.html` file (if it exists).
    - Upload your frontend HTML file into the `wwwroot` folder.
    - Rename your HTML file to `index.html`.
-
-4. **Verify the Website**![Screenshot 2024-08-16 033623](https://github.com/user-attachments/assets/ad75df38-da61-41fb-abb6-9613f14c5319)
-
-   - Ensure the IIS service is running by opening `Internet Information Services (IIS) Manager`.
-   - Start or restart the website from within IIS Manager if needed.
-   - Go to your Web VM's public IP address in a browser:  
-     `http://<your-web-vm-public-ip>`.
-   - You should now see your frontend site hosted and accessible via the public IP of the Web VM.
-
-   Example:  
-   If your Web VM's public IP is `13.92.140.123`, open `http://13.92.140.123` in a browser to view the site.
-
-Congratulations! Your site is now live using IIS on Windows Server.
-
-Now, any person with internet access should be able to open this site using the public IP or domain name[DNS or Direct Access: Users will access the site via the public IP address of the Web VM unless you set up a DNS to point a domain name to this IP. If you only provide the public IP, other users will need to enter that IP address directly into their browser].
+    
+3. **Verify the Website** ![Screenshot 2024-09-26 111106](https://github.com/user-attachments/assets/ff3c7b51-2655-4da1-8ee1-189e88cfc646)
 
 
+  
+   - Open `Internet Information Services (IIS) Manager` to verify that the IIS service is running.
+   - If necessary, start or restart the website through IIS Manager.
+   - In a browser, navigate to your Web VM’s public IP address:
+      `http://<your-web-vm-public-ip>`.
+   - You should now see your frontend site, accessible via the Web VM's public IP.
+For example, if your Web VM's public IP is 52.175.225.251, enter http://52.175.225.251 in your browser to view the site.
 
+Congratulations! Your site is now live on IIS using Windows Server.
 
+Now, anyone with internet access can open the site using the public IP or domain name. If you have set up DNS, users can access the site through a domain name; otherwise, they will need to use the public IP address directly in their browser.
 
+## Contact
 
+For any questions, doubts, or clarifications regarding this repository, feel free to reach out:
 
-
-
-
-
-
-
-## Further Reading
-
-For detailed insights and learnings from this project, please refer to the [Insights and Learnings](INSIGHTS_AND_LEARNINGS.md) document.
-
-
+- Email: mailto:tomarankitsingh2000@gmail.com
+- LinkedIn: https://www.linkedin.com/in/tomarankitsingh/
