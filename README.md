@@ -42,7 +42,7 @@ Let’s begin constructing this architecture!
 1. Open the Azure portal.
 2. Use the search bar to find "Resource Groups" and click on `Create`.
 3. Enter `ThreeTier-RG` as the **Resource Group Name**.
-4. Choose West US 2 (or your preferred region) for the `Region`.
+4. Choose **West US 2** (or your preferred region) for the `Region`.
 5. Click `Review + Create`, then select `Create`.
 
 ---
@@ -85,93 +85,98 @@ Let’s begin constructing this architecture!
 
 
    - Add inbound security rules to allow HTTP (port 80) and HTTPS (port 443) traffic from any source.
-   - Add outbound security rules to allow from any source to Appsubnet as the destination (add the IP of Appsubnet). 
 
-2. **AppNSG**: ![image](https://github.com/user-attachments/assets/6fbbcfb4-654e-42ec-bfc6-34de95b80418)
+2. **AppNSG**: ![image](https://github.com/user-attachments/assets/6e80e5f8-cb3c-4dbc-8807-742b5fbd6be9)
+
 
 
    - Add inbound security rules to allow traffic from `WebSubnet` to `AppSubnet` on port 8080.
 
-3. **DbNSG**:![Screenshot 2024-08-16 032029](https://github.com/user-attachments/assets/9e991fc7-ca85-465b-b3bd-297ce14dd7ca)
+3. **DbNSG**: ![image](https://github.com/user-attachments/assets/14e19146-ce29-42d4-8a91-750a370ee817)
+
 
    - Add inbound security rules to allow traffic from `AppSubnet` to `DbSubnet` on port 1433.
 
 ### Associate NSGs with Subnets
+![image](https://github.com/user-attachments/assets/e6422ec2-2183-4d4f-a6aa-769267cacb32)
 
-1. Go to the `Virtual Network` you created.
-2. Select the `Subnets` tab.
-3. For each subnet, associate the respective NSG:
-   - `WebSubnet` -> `WebNSG`
-   - `AppSubnet` -> `AppNSG`
-   - `DbSubnet` -> `DbNSG`
+
+1. Go to the `Network Security Groups` you created.
+2. Select the `WebNSG` and then Select the `Subnets` tab.
+3. For each NSG, associate the respective Subnet:
+   - `WebNSG` -> `Web-Subnet`
+   - `AppNSG` -> `App-Subnet`
+   - `DbNSG` -> `DB-Subnet`
 
 ---
 
 ## Step 4: Create Virtual Machines for Each Tier
-![Screenshot 2024-08-16 032044](https://github.com/user-attachments/assets/1a23c45a-fd75-4d3a-b108-8379cc132370)
+![image](https://github.com/user-attachments/assets/f2ae0f97-b197-479b-96cd-9714b20206b5)
+
 
 
 ### Create Web VM
 
-1. In the search bar, search for `Virtual Machines` and click `Create`.
-2. Set the **Name** to `WebVM`.
-3. Set the **Region** to `East US`.
-4. Select your desired OS image (e.g., Ubuntu Server or Windows).
-5. Under `Networking`, select the `ThreeTierVNet` and `WebSubnet`.
-6. Select `WebNSG` for the Network Security Group.
-7. Click `Review + Create`, then `Create`.
+1. In the search bar, look for `Virtual Machines` and select `Create`.
+2. Enter `USW-WEB-VM` as the **Name**.
+3. Choose `WestUS 2` for the **Region**.
+4. Pick your preferred OS image (e.g., Ubuntu Server or Windows).
+5. Under the `Networking` section, select `ThreeTierVNet` and `Web-Subnet`.
+6. For the `Network Security Group`, choose `WebNSG`.
+7. Click `Review + Create`, and then hit `Create`.
 
 ### Create App VM
 
 1. Repeat the steps for creating `AppVM`.
-2. Set the **Subnet** to `AppSubnet`.
+2. Set the **Subnet** to `App-Subnet`.
 3. Set the **NSG** to `AppNSG`.
 
 ### Create DB VM
 
 1. Repeat the steps for creating `DbVM`.
-2. Set the **Subnet** to `DbSubnet`.
+2. Set the **Subnet** to `DB-Subnet`.
 3. Set the **NSG** to `DbNSG`.
 
 ---
 
 ## Step 5: Create Load Balancers for Web, App, and DB Tiers
-![Screenshot 2024-08-16 032150](https://github.com/user-attachments/assets/0af47943-d19b-482a-b104-e5584fea0dba)
+![image](https://github.com/user-attachments/assets/040b9b39-ebc6-4157-82f8-cdba32c403fc)
+
 
 
 ### Create Public Load Balancer for Web Tier
 
-1. In the search bar, search for `Load Balancers` and click `Create`.
-2. Set the **Name** to `WebLB`.
+1. In the search bar, find `Load Balancers` and select `Create`.
+2. Enter `PublicLB-Web` as the **Name**.
 3. Set the **Type** to `Public`.
-4. Create a new public IP for the load balancer.
-5. Click `Review + Create`, then `Create`.
-
-6. Go to the `Backend Pools` section of the load balancer and add `WebVM` to the pool.
+4. Create a new public IP address for the load balancer.
+5. Click `Review + Create`, then hit `Create`.
+6. Navigate to the `Backend Pools` section of the load balancer and add `WebVM` to the pool.
 
 ### Create Internal Load Balancers for App and DB Tiers
 
-1. Follow the steps above to create an internal load balancer for `AppLB`:
+1. Follow the steps above to create an internal load balancer for `InternalLB-App`:
    - Set the **Type** to `Internal`.
-   - Assign it a private IP within `AppSubnet`.
-   - Add `AppVM` to the backend pool.
+   - Assign it a private IP within `App-Subnet`.
+   - Add `USW-APP-VM` to the backend pool.
 
-2. Repeat the steps to create an internal load balancer for `DbLB`:
+2. Repeat the steps to create an internal load balancer for `InternalLB-DB`:
    - Set the **Type** to `Internal`.
-   - Assign it a private IP within `DbSubnet`.
-   - Add `DbVM` to the backend pool.
+   - Assign it a private IP within `DB-Subnet`.
+   - Add `USW-DB-VM` to the backend pool.
 
 ---
 
 ## Step 6: Host `index.html` on Web VM (IIS Windows Server)
 
-1. **Promote WebVM to IIS Windows Server**![Screenshot 2024-08-16 033429](https://github.com/user-attachments/assets/d0eb7900-3371-4af6-aac4-ffdc0f7a6e91)
+1. **Promote WebVM to IIS Windows Server** ![Screenshot (1)](https://github.com/user-attachments/assets/b7fee1a0-83a4-4ce3-8691-4ae49046ffdb)
 
-   - Once your Web VM is deployed, log in via Remote Desktop (RDP).
-   - Open `Server Manager` on your Windows VM.
-   - In `Server Manager`, select `Add roles and features`.
-   - Follow the wizard, and in the `Roles` section, check the box for `Web Server (IIS)`.
-   - Complete the wizard and wait for the IIS role to be installed.
+
+   - After your Web VM is deployed, connect to it using Remote Desktop (RDP).
+   - Launch `Server Manager` on the Windows VM.
+   - In Server Manager, choose `Add roles and features`.
+   - Proceed through the wizard, and in the `Roles` section, select `Web Server (IIS)`.
+   - Finish the wizard and wait for the IIS role to install.
 
 2. **Navigate to the wwwroot Directory**![Screenshot 2024-08-16 033523](https://github.com/user-attachments/assets/a065d8f2-7e32-404a-bc64-d6e8377bfbf8)
 
