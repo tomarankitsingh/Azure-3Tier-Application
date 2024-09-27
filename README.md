@@ -33,7 +33,7 @@ The 3-tier architecture is widely utilized in the development of web application
 
 Let’s begin constructing this architecture!
 
-## Step 1: Creating a Resource Group
+## Step 1: Create a Resource Group
 ![image](https://github.com/user-attachments/assets/78f36e59-433f-47a6-b539-d8c519d79cbd)
 
 
@@ -42,19 +42,19 @@ Let’s begin constructing this architecture!
 1. Open the Azure portal.
 2. Use the search bar to find "Resource Groups" and click on `Create`.
 3. Enter `ThreeTier-RG` as the **Resource Group Name**.
-4. Choose **West US 2** (or your preferred region) for the `Region`.
+4. Choose `West US 2` (or your preferred region) for the **Region**.
 5. Click `Review + Create`, then select `Create`.
 
 ---
 
-## Step 2: Creating a Virtual Network with 3 Subnets
+## Step 2: Create a Virtual Network with 3 Subnets
 ![image](https://github.com/user-attachments/assets/96a2dfe2-39af-49d4-870c-d814742f9805)
 
 
 1. In the search bar, look for `Virtual Networks` and click on `Create`.
-2. Enter **ThreeTierVNet** as the `Name`.
-3. Select **West US 2** for the `Region`.
-4. Set the `Address Space` to **10.0.0.0/24**.
+2. Enter `ThreeTierVNet` as the **Name**.
+3. Select `West US 2` for the **Region**.
+4. Set the **Address Space** to `10.0.0.0/24`.
 5. Click on `Next: IP Addresses`.
 
 6. Add 3 Subnets:
@@ -98,7 +98,8 @@ Let’s begin constructing this architecture!
    - Add inbound security rules to allow traffic from `AppSubnet` to `DbSubnet` on port 1433.
 
 ### Associate NSGs with Subnets
-![image](https://github.com/user-attachments/assets/e6422ec2-2183-4d4f-a6aa-769267cacb32)
+![Screenshot 2024-09-27 100031](https://github.com/user-attachments/assets/ad51dacf-2599-4ca5-bee3-7069a2fc9c89)
+
 
 
 1. Go to the `Network Security Groups` you created.
@@ -174,7 +175,7 @@ Let’s begin constructing this architecture!
 
    - After your Web VM is deployed, connect to it using Remote Desktop (RDP).
    - Launch `Server Manager` on the Windows VM.
-   - In Server Manager, choose `Add roles and features`.
+   - In `Server Manager`, choose `Add roles and features`.
    - Proceed through the wizard, and in the `Roles` section, select `Web Server (IIS)`.
    - Finish the wizard and wait for the IIS role to install.
 
@@ -197,6 +198,7 @@ Let’s begin constructing this architecture!
    - In a browser, navigate to your Web VM’s public IP address:
       `http://<your-web-vm-public-ip>`.
    - You should now see your frontend site, accessible via the Web VM's public IP.
+
 For example, if your Web VM's public IP is 52.175.225.251, enter http://52.175.225.251 in your browser to view the site.
 
 Congratulations! Your site is now live on IIS using Windows Server.
